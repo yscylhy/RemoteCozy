@@ -1,7 +1,6 @@
 const int CTRL_PIN = 2;
-String inputString = "";         // a String to hold incoming data
-bool stringComplete = false;     // whether the string is complete
-
+String inputString = "";
+bool stringComplete = false;
 
 void setup(){
   Serial.begin(9600);
@@ -22,14 +21,11 @@ void loop(){
     else{
       digitalWrite(CTRL_PIN, LOW);
     }
-    
-                              
-    // clear the string:
+
     inputString = "";
     stringComplete = false;    
   }
 }
-
 
 /*
   SerialEvent occurs whenever a new data comes in the hardware serial RX. This
