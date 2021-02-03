@@ -6,3 +6,8 @@ Before jumping into the *dirty* work in this repo, check for possible **Nest sol
 
 
 Make sure you are well aware of how gas wall heater work before change the circuit.
+
+**The circuit picture** 
+
+
+<img src="./photos/20210202.PNG" alt="drawing" width="200"/>
