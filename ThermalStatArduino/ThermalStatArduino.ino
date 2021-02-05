@@ -1,10 +1,12 @@
 const int CTRL_PIN = 2;
+const int BUZZER_PIN = 3;
 String inputString = "";
 bool stringComplete = false;
 
 void setup(){
   Serial.begin(9600);
   pinMode(CTRL_PIN, OUTPUT);
+  pinMode(BUZZER_PIN, OUTPUT); 
   digitalWrite(CTRL_PIN, LOW);
   Serial.println("Initialization Done.");
 }
@@ -17,6 +19,20 @@ void loop(){
     }
     else if ((inputString == String("1\n"))){
       digitalWrite(CTRL_PIN, HIGH);
+    }
+    else if((inputString==String("2\n"))){
+       tone(BUZZER_PIN, 1000); 
+       delay(500);               
+       tone(BUZZER_PIN, 2000);
+       delay(500);                 
+       noTone(BUZZER_PIN); 
+    }
+    else if((inputString==String("3\n"))){
+       tone(BUZZER_PIN, 2000); 
+       delay(500);                 
+       tone(BUZZER_PIN, 1000); 
+       delay(500);             
+       noTone(BUZZER_PIN); 
     }
     else{
       digitalWrite(CTRL_PIN, LOW);
