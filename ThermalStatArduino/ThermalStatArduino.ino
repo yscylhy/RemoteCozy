@@ -21,17 +21,17 @@ void loop(){
       digitalWrite(CTRL_PIN, HIGH);
     }
     else if((inputString==String("2\n"))){
-       tone(BUZZER_PIN, 1000); 
-       delay(500);               
-       tone(BUZZER_PIN, 2000);
-       delay(500);                 
+       tone(BUZZER_PIN, 2000); 
+       delay(500);                  
        noTone(BUZZER_PIN); 
     }
     else if((inputString==String("3\n"))){
        tone(BUZZER_PIN, 2000); 
-       delay(500);                 
-       tone(BUZZER_PIN, 1000); 
-       delay(500);             
+       delay(250);                 
+       noTone(BUZZER_PIN); 
+       delay(50);
+       tone(BUZZER_PIN, 2000); 
+       delay(250);             
        noTone(BUZZER_PIN); 
     }
     else{
