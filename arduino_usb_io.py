@@ -16,6 +16,9 @@ class MyArduino:
             else:
                 port = "/dev/ttyACM0"
         self.ser = serial.Serial(port, 9600, timeout=timeout)
+        self.fahrenheit = 32
+        self.celsius = 0
+        self.humidity = 0
 
     def turn_on(self):
         self.send(self.commands["Buzzer on"])
@@ -28,16 +31,16 @@ class MyArduino:
     def send(self, message):
         self.ser.write("{}\n".format(message).encode())
 
-    def get_temp(self):
+    def update_dht11(self):
         self.ser.read(self.ser.inWaiting())
-        time.sleep(0.1)
         self.send(self.commands["DHT11"])
         time.sleep(0.1)
         msg = self.ser.read(self.ser.inWaiting())
         msg = msg.decode("utf-8")
         try:
-            h = float(msg.split("#")[1])
-            t = float(msg.split("#")[2])
+            self.humidity = float(msg.split("#")[1])
+            self.celsius = float(msg.split("#")[2])
         except:
-            h, t = 0, 0
-        return t, h
+            pass
+
+        self.fahrenheit = f"{(self.celsius*9/5) + 32:.1f}"
