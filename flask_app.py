@@ -8,17 +8,20 @@ import time
 
 job_queue = deque([])
 arduino = arduino_usb_io.MyArduino()
+status = 'OFF'
 
 
 def check_job_queue():
-    global job_queue
+    global job_queue, status
     while True:
         cur_time = time.time()
         if job_queue and job_queue[0][0] < cur_time:
             if job_queue[0][1] is 'on':
                 arduino.turn_on()
+                status = 'ON'
             elif job_queue[0][1] is 'off':
                 arduino.turn_off()
+                status = 'OFF'
             job_queue.popleft()
         time.sleep(1)
 
@@ -27,7 +30,9 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html', title='RemoteCozy')
+    global status
+    temp, humidity = arduino.get_temp()
+    return render_template('index.html', title='RemoteCozy', status=status, t=temp, h=humidity)
 
 
 @app.route('/ON')

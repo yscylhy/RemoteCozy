@@ -1,9 +1,11 @@
 import sys
 import serial
+import time
 
 
 class MyArduino:
-    commands = {"Turn off": "0", "Turn on": "1", "Buzzer on": 2, "Buzzer off": 3}
+    commands = {"Turn off": "0", "Turn on": "1", "Buzzer on": 2, "Buzzer off": 3,
+                "DHT11": 4}
 
     def __init__(self, port=None, timeout=0.5):
         if port is None:
@@ -13,7 +15,7 @@ class MyArduino:
                 port = "/dev/ttyACM0"
             else:
                 port = "/dev/ttyACM0"
-        self.arduino = serial.Serial(port, 9600, timeout=timeout)
+        self.ser = serial.Serial(port, 9600, timeout=timeout)
 
     def turn_on(self):
         self.send(self.commands["Buzzer on"])
@@ -24,10 +26,18 @@ class MyArduino:
         self.send(self.commands["Turn off"])
 
     def send(self, message):
-        self.arduino.write("{}\n".format(message).encode())
+        self.ser.write("{}\n".format(message).encode())
 
     def get_temp(self):
-        # TODO: dummy code for now.
-        c_temp = 37.8
-        f_temp = 105.8
-        return c_temp, f_temp
+        self.ser.read(self.ser.inWaiting())
+        time.sleep(0.1)
+        self.send(self.commands["DHT11"])
+        time.sleep(0.1)
+        msg = self.ser.read(self.ser.inWaiting())
+        msg = msg.decode("utf-8")
+        try:
+            h = float(msg.split("#")[1])
+            t = float(msg.split("#")[2])
+        except:
+            h, t = 0, 0
+        return t, h

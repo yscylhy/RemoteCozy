@@ -3,10 +3,13 @@
         <title>{{ title }} - RemoteCozy</title>
     </head>
     <body>
-        <h1>Remote Cozy</h1>
+        <h1>Remote Cozy: {{ status }}</h1>
+        <h1>Temperature: {{ t }}C</h1>
+        <h1>Humidity: {{ h }}%</h1>
     </body>
     <button type="button" style="height:300px;width:300px"><a href="/ON"><h1>ON</h1></a></button>
     <button type="button" style="height:300px;width:300px"><a href="/OFF"><h1>OFF</h1></a></button>
     <button type="button" style="height:300px;width:300px"><a href="/15MIN"><h1>15 MIN</h1></a></button>
     <button type="button" style="height:300px;width:300px"><a href="/30MIN"><h1>30 MIN</h1></a></button>
+    <button type="button" style="height:300px;width:300px"><a href="/index"><h1>Refresh</h1></a></button>
 </html>
